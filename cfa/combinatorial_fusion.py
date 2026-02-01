@@ -75,7 +75,7 @@ def performance_plot(
     # compute number of letters for index, so we can sort within each group with same number of letters
     f = fusion_df.copy()
     f["k"] = f.index.to_series().astype(str).str.len()
-    base_perf = f.loc[f['k'] == 1, :].drop(columns = ['k'], axis = 1)
+    base_perf = f.loc[f['k'] == 1, :].drop(columns = ['k'])
 
     # sort by group k then by sort_col within group
     f = f.sort_values(["k", sort_col], ascending=[True, True])
