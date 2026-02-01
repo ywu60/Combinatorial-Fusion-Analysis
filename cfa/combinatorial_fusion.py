@@ -7,11 +7,12 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import string # get letters A, B, etc
 import itertools # use combination function
+from typing import Literal # function definition
 import matplotlib.ticker as ticker # for RSC function graph
 
 
 
-def cfa_single_layer(probs_df, y_true, perf_metric):
+def cfa_single_layer(probs_df, y_true, perf_metric: Literal["accuracy", "auroc"]):
     # ========= Step 1 basic check for df and target vector ==========
     # check if probs_df has more than 2 columns
     if probs_df.shape[1] < 3:
@@ -166,7 +167,7 @@ def performance_plot(
     print(f"Best combination: {f[draw_cols].max().max():.4f}")
     print(f"Best single: {pd.DataFrame(base_perf).max().max():.4f}")
 
-    f = f.drop(columns=['k'], axis = 1)
+    f = f.drop(columns=['k'])
     return f  # return sorted df
 
 
