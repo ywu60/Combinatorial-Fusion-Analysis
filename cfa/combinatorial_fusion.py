@@ -1,4 +1,5 @@
-
+from .fusion_function import compute_cd_ds, average_score_combination, average_rank_combination, \
+    weighted_score_combination_by_ds, weighted_rank_combination_by_ds, compute_performance
 
 import seaborn
 import numpy as np

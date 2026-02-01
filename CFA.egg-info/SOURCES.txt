@@ -1,0 +1,9 @@
+README.md
+pyproject.toml
+CFA.egg-info/PKG-INFO
+CFA.egg-info/SOURCES.txt
+CFA.egg-info/dependency_links.txt
+CFA.egg-info/top_level.txt
+cfa/__init__.py
+cfa/combinatorial_fusion.py
+cfa/fusion_function.py
