@@ -1,7 +1,7 @@
 from .fusion_function import compute_cd_ds, average_score_combination, average_rank_combination, \
     weighted_score_combination_by_ds, weighted_rank_combination_by_ds, compute_performance
 
-import seaborn
+
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -70,7 +70,7 @@ def performance_plot(
     figsize=(10, 4),
     ylabel="Accuracy", xlabel="CFA models",
 ):
-
+    import seaborn
     # compute number of letters for index, so we can sort within each group with same number of letters
     f = fusion_df.copy()
     f["k"] = f.index.to_series().astype(str).str.len()
@@ -174,6 +174,7 @@ def RSC_graph(df: pd.DataFrame,
             palette=None, markers=None,
             title=r"Rank-score function graph", max_markers=60):
 
+    import seaborn
     # ---- compute rank-score function ----
     f1, _, _ = compute_cd_ds(df)
 
