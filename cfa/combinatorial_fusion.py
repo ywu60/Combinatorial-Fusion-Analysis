@@ -192,17 +192,19 @@ def RSC_graph(df: pd.DataFrame,
         "#56B4E9",  # sky blue
     ]
     default_markers = ["o", "s", "^", "D", "x", "v"]
+    
+    if (m > 6) and (palette is None) and (markers is None):
+        raise ValueError(
+            f"RSC_graph: df has {m} columns but default palette/markers support up to 6.\n"
+            "Please pass `palette=[...]` and `markers=[...]` with length >= number of columns."
+        )
 
     if palette is None:
         palette = default_palette
     if markers is None:
         markers = default_markers
 
-    if m > 6:
-        raise ValueError(
-            f"RSC_graph: df has {m} columns but default palette/markers support up to 6.\n"
-            "Please pass `palette=[...]` and `markers=[...]` with length >= number of columns."
-        )
+
     if len(palette) < m or len(markers) < m:
         raise ValueError(
             f"RSC_graph: Need at least {m} colors and {m} markers "
