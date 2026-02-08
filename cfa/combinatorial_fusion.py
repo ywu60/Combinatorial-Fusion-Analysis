@@ -173,7 +173,7 @@ def performance_plot(
 
 def RSC_graph(df: pd.DataFrame,
             palette=None, markers=None,
-            title=r"Rank-score function graph", max_markers=60):
+            title=r"Rank-score function graph", max_markers=60, leg = True):
 
     import seaborn
     # ---- compute rank-score function ----
@@ -260,6 +260,9 @@ def RSC_graph(df: pd.DataFrame,
     ax.tick_params(axis='both', which='major', length=6, width=1.0, direction='in')
     ax.tick_params(axis='x', labelrotation=40)
 
-    ax.legend(fontsize=15)
+    leg = ax.get_legend(fontsize = 15)
+    if leg is False:
+        leg.remove()
+
     fig.tight_layout()
     plt.show()
