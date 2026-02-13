@@ -163,7 +163,7 @@ def compute_performance(df, perf_metric: Literal["accuracy", "auroc"], y_true, s
         if perf_metric == 'accuracy':
             acc_dict = {}
             for col in df_n.columns:
-                y_binary = (df_n[col] <= 0.5).astype(int)
+                y_binary = (df_n[col] <= 0.35).astype(int)
                 acc_dict[col] = accuracy_score(y_true, y_binary)
             perf = pd.Series(acc_dict, name = 'accuracy')
         
