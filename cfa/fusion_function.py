@@ -6,8 +6,15 @@ import matplotlib.pyplot as plt
 import itertools # use combination function
 from typing import Literal # function definition
 from sklearn.metrics import accuracy_score, roc_auc_score
-import matplotlib.ticker as ticker # for RSC function graph
+import matplotlib.ticker as ticker
+from torch import threshold # for RSC function graph
 
+# normalization, compute_cd_ds, 
+# average_score_combination,
+# average_rank_combination, 
+# weighted_score_combination_by_ds, 
+# weighted_rank_combination_by_ds, 
+# compute_performance
 
 def normalization(df: pd.DataFrame) -> pd.DataFrame:    
     minv = df.min(axis = 0)
@@ -161,10 +168,14 @@ def compute_performance(df, perf_metric: Literal["accuracy", "auroc"], y_true, s
         df_n = (df - df.min()) / (df.max() - df.min()) # normalize ranks to [0, 1]
 
         if perf_metric == 'accuracy':
-            acc_dict = {}
+            acc_dict = {}; acc = 0
             for col in df_n.columns:
-                y_binary = (df_n[col] <= 0.65).astype(int)
-                acc_dict[col] = accuracy_score(y_true, y_binary)
+                for thresh in np.arange(0.01, 1, 0.01):
+                    y_binary = (df_n[col] < thresh).astype(int) # convert to binary labels using a threshold
+                    acc_temp = accuracy_score(y_true, y_binary) 
+                    if acc_temp > acc:
+                        acc = acc_temp
+                acc_dict[col] = acc
             perf = pd.Series(acc_dict, name = 'accuracy')
         
         elif perf_metric == 'auroc': # here df or df_n is fine because auroc is based on ranks
