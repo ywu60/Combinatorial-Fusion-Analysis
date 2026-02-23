@@ -4,8 +4,8 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import itertools # use combination function
-from typing import Literal # function definition
-from sklearn.metrics import accuracy_score, roc_auc_score
+from typing import Literal, Optional # function definition
+from sklearn.metrics import accuracy_score, roc_auc_score, precision_score
 import matplotlib.ticker as ticker
 from torch import threshold # for RSC function graph
 
@@ -143,14 +143,14 @@ def weighted_rank_combination_by_ds(df):
     return score_df
 
 
-def compute_performance(df, perf_metric: Literal["accuracy", "auroc"], y_true, score = True):
+def compute_performance(df, y_true, perf_metric: Literal["accuracy", "auroc", "precision@k"], score = True , k: Optional[int] = None):
     # the reason that we need to distinguish score or rank when computing performance is
     # for ranks, we covnert to values between 0 and 1 and then compare to 0.5
     # since rank 1 is the highest and will be converted to 0, 
     # converted values less than 0.5 should have label 1.
     
-    if perf_metric not in ("accuracy", "auroc"):
-        raise ValueError("Performance metric we support now is 'accuracy' or 'auroc'!")
+    if perf_metric not in ("accuracy", "auroc", "precision@k"):
+        raise ValueError("Performance metric we support now is 'accuracy', 'auroc' or 'precision@k'!")
     if score:
         if perf_metric == 'accuracy':
             acc_dict = {}
@@ -162,8 +162,27 @@ def compute_performance(df, perf_metric: Literal["accuracy", "auroc"], y_true, s
             auc_dict = {}
             for col in df.columns:
                 auc_dict[col] = roc_auc_score(y_true, df[col])
-                
             perf = pd.Series(auc_dict, name = 'auroc')
+        elif perf_metric == "precision@k":
+            if k is None:
+                raise ValueError("k must be provided when perf_metric='precision@k'")
+            if k > len(y_true):
+                raise ValueError(f"k={k} cannot exceed number of instances={len(y_true)}")
+
+            y_true_arr = np.asarray(y_true).astype(int)
+
+            prec_dict = {}
+            for col in df.columns:
+                scores = df[col].to_numpy()
+
+                # top-k indices by descending score
+                topk_idx = np.argsort(-scores)[:k]
+
+                # precision@k = TP/k
+                prec_at_k = y_true_arr[topk_idx].sum() / k
+                prec_dict[col] = float(prec_at_k)
+
+            perf = pd.Series(prec_dict, name=f"precision@{k}")
     else: 
         df_n = (df - df.min()) / (df.max() - df.min()) # normalize ranks to [0, 1]
 
@@ -185,6 +204,26 @@ def compute_performance(df, perf_metric: Literal["accuracy", "auroc"], y_true, s
                 auc_dict[col] = 1- roc_auc_score(y_true, df[col]) # auc is based on ascending order
                 
             perf = pd.Series(auc_dict, name = 'auroc')
+
+        elif perf_metric == "precision@k":
+            if k is None:
+                raise ValueError("k must be provided when perf_metric='precision@k'")
+            if k > len(y_true):
+                raise ValueError(f"k={k} cannot exceed number of instances={len(y_true)}")
+
+            y_true_arr = np.asarray(y_true).astype(int)
+
+            prec_dict = {}
+            for col in df.columns:
+                ranks = df[col].to_numpy()
+
+                # top-k indices by ascending rank (smallest ranks are best)
+                topk_idx = np.argsort(ranks)[:k]
+
+                prec_at_k = y_true_arr[topk_idx].sum() / k
+                prec_dict[col] = float(prec_at_k)
+
+            perf = pd.Series(prec_dict, name=f"precision@{k}")
         
     return perf
 

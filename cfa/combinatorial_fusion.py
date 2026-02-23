@@ -8,12 +8,12 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import string # get letters A, B, etc
 import itertools # use combination function
-from typing import Literal # function definition
+from typing import Literal, Optional # function definition
 import matplotlib.ticker as ticker # for RSC function graph
 
 
 
-def cfa_single_layer(probs_df, y_true, perf_metric: Literal["accuracy", "auroc"]):
+def cfa_single_layer(probs_df, y_true, perf_metric: Literal["accuracy", "auroc", "precision@k"], k: Optional[int] = None):
     # ========= Step 1 basic check for df and target vector ==========
     # check if probs_df has more than 2 columns
     if probs_df.shape[1] < 3:
@@ -32,7 +32,7 @@ def cfa_single_layer(probs_df, y_true, perf_metric: Literal["accuracy", "auroc"]
     probs_df.columns = list(string.ascii_uppercase[:n_col])
 
     # get performance for base models: accuracy or auroc
-    base_perf = compute_performance(probs_df, perf_metric, y_true, score=True)
+    base_perf = compute_performance(probs_df,  y_true, perf_metric, score=True, k=k)
         
 
     #======== Step 3 combine models using CFA ========
@@ -44,10 +44,10 @@ def cfa_single_layer(probs_df, y_true, perf_metric: Literal["accuracy", "auroc"]
 
 
     #======== Step 4 compute perforomance for combined models ========
-    perf_asc = compute_performance(df_asc, perf_metric, y_true, score = True)
-    perf_arc = compute_performance(df_arc, perf_metric, y_true, score = False)
-    perf_wscds = compute_performance(df_wscds, perf_metric, y_true, score = True)
-    perf_wrcds = compute_performance(df_wrcds, perf_metric, y_true, score = False)
+    perf_asc = compute_performance(df_asc, y_true, perf_metric, score = True, k=k)
+    perf_arc = compute_performance(df_arc, y_true, perf_metric, score = False, k=k)
+    perf_wscds = compute_performance(df_wscds, y_true, perf_metric, score = True, k=k)
+    perf_wrcds = compute_performance(df_wrcds, y_true, perf_metric, score = False, k=k)
 
     # put all performance together by index
     combined_df = pd.concat([perf_asc, perf_wscds, perf_arc, perf_wrcds], axis = 1, keys = ['asc', 'wscds', 'arc', 'wrcds'])

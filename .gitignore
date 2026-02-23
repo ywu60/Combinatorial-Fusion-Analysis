@@ -23,3 +23,5 @@ env/
 # Logs
 *.log
 
+cfa/test.ipynb
+
