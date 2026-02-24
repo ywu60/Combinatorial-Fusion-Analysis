@@ -16,7 +16,7 @@ This project is still ongoing. Multilayer combinatorial fusion is on the way. St
 
 ### Requirements
 - Python: **>= 3.9**
-- Tested dependency ranges (installed automatically by pip):
+- Tested dependency ranges:
   - numpy: **>=1.22,<3**
   - pandas: **>=1.5,<3**
   - scikit-learn: **>=1.1,<2**
@@ -24,6 +24,5 @@ This project is still ongoing. Multilayer combinatorial fusion is on the way. St
   - seaborn: **>=0.12,<0.14**
 
 
-### Install the latest version from GitHub (recommended)
 #  Install directly from GitHub
-pip install "git+https://github.com/ywu60/Combinatorial-Fusion-Analysis.git
+pip install "git+https://github.com/ywu60/Combinatorial-Fusion-Analysis.git"
