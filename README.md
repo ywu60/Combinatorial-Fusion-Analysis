@@ -24,6 +24,6 @@ This project is still ongoing. Multilayer combinatorial fusion is on the way. St
   - seaborn: **>=0.12,<0.14**
 
 
-#  Install directly from GitHub
+##  Install directly from GitHub
 ```bash
 pip install "git+https://github.com/ywu60/Combinatorial-Fusion-Analysis.git"
