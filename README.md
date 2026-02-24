@@ -25,4 +25,5 @@ This project is still ongoing. Multilayer combinatorial fusion is on the way. St
 
 
 #  Install directly from GitHub
+```bash
 pip install "git+https://github.com/ywu60/Combinatorial-Fusion-Analysis.git"
