@@ -11,3 +11,19 @@ The packgae also provides functions to draw rank-score function graph and perfor
 For how to use the packgae, please see test_cfa.ipynb file.
 
 This project is still ongoing. Multilayer combinatorial fusion is on the way. Stay tuned.
+
+## Installation (from GitHub)
+
+### Requirements
+- Python: **>= 3.9**
+- Tested dependency ranges (installed automatically by pip):
+  - numpy: **>=1.22,<3**
+  - pandas: **>=1.5,<3**
+  - scikit-learn: **>=1.1,<2**
+  - matplotlib: **>=3.6,<4**
+  - seaborn: **>=0.12,<0.14**
+
+
+### Install the latest version from GitHub (recommended)
+#  Install directly from GitHub
+pip install "git+https://github.com/ywu60/Combinatorial-Fusion-Analysis.git
