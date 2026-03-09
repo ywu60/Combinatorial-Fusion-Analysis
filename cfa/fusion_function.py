@@ -83,7 +83,7 @@ def average_score_combination(df):
 
     # Convert to DataFrame
     score_df = pd.DataFrame(scoring_sys, index=df.index)
-    score_df = score_df.add_suffix("_asc")
+    # score_df = score_df.add_suffix("_asc")
     return score_df
 
 
@@ -101,7 +101,7 @@ def average_rank_combination(df):
 
     # Convert to DataFrame
     score_df = pd.DataFrame(scoring_sys, index=df.index)
-    score_df = score_df.add_suffix("_arc")
+    # score_df = score_df.add_suffix("_arc")
     return score_df
 
 
@@ -121,7 +121,7 @@ def weighted_score_combination_by_ds(df):
 
     # Convert to DataFrame
     score_df = pd.DataFrame(scoring_sys, index=df.index)
-    score_df = score_df.add_suffix("_wscds")
+    # score_df = score_df.add_suffix("_wscds")
     return score_df
 
 
@@ -143,7 +143,7 @@ def weighted_rank_combination_by_ds(df):
 
     # Convert to DataFrame
     score_df = pd.DataFrame(scoring_sys, index=df.index)
-    score_df = score_df.add_suffix("_wrcds")
+    # score_df = score_df.add_suffix("_wrcds")
     return score_df
 
 
