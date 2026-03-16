@@ -83,7 +83,6 @@ def average_score_combination(df):
 
     # Convert to DataFrame
     score_df = pd.DataFrame(scoring_sys, index=df.index)
-    # score_df = score_df.add_suffix("_asc")
     return score_df
 
 
@@ -101,7 +100,6 @@ def average_rank_combination(df):
 
     # Convert to DataFrame
     score_df = pd.DataFrame(scoring_sys, index=df.index)
-    # score_df = score_df.add_suffix("_arc")
     return score_df
 
 
@@ -121,7 +119,6 @@ def weighted_score_combination_by_ds(df):
 
     # Convert to DataFrame
     score_df = pd.DataFrame(scoring_sys, index=df.index)
-    # score_df = score_df.add_suffix("_wscds")
     return score_df
 
 
@@ -143,7 +140,6 @@ def weighted_rank_combination_by_ds(df):
 
     # Convert to DataFrame
     score_df = pd.DataFrame(scoring_sys, index=df.index)
-    # score_df = score_df.add_suffix("_wrcds")
     return score_df
 
 
@@ -172,6 +168,8 @@ def compute_performance(df, y_true, perf_metric: Literal["accuracy", "auroc", "p
                 raise ValueError("k must be provided when perf_metric='precision@k'")
             if k > len(y_true):
                 raise ValueError(f"k={k} cannot exceed number of instances={len(y_true)}")
+            if k == 0:
+                raise ValueError("k must be greater than 0 for precision@k")
 
             y_true_arr = np.asarray(y_true).astype(int)
 
@@ -214,6 +212,8 @@ def compute_performance(df, y_true, perf_metric: Literal["accuracy", "auroc", "p
                 raise ValueError("k must be provided when perf_metric='precision@k'")
             if k > len(y_true):
                 raise ValueError(f"k={k} cannot exceed number of instances={len(y_true)}")
+            if k == 0:
+                raise ValueError("k must be greater than 0 for precision@k")
 
             y_true_arr = np.asarray(y_true).astype(int)
 
