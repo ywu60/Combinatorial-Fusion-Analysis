@@ -165,8 +165,9 @@ def performance_plot(
     plt.tight_layout()
     plt.show()
 
-    print(f"Best combination: {f[draw_cols].max().max():.4f}")
     print(f"Best single: {pd.DataFrame(base_perf).max().max():.4f}")
+    print(f"Best combination: {f[draw_cols].max().max():.4f}")
+    
 
     f = f.drop(columns=['k'])
     return f  # return sorted df
