@@ -25,4 +25,6 @@ env/
 
 cfa/test.ipynb
 
+cfa/ML_mcf.ipynb
+
 *.npz
